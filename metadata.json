@@ -1,0 +1,5 @@
+{
+  "name": "eTDS Corrector Pro",
+  "description": "A modern, secure web application for correcting and validating TDS consolidated data from Excel/CSV files with NSDL/TRACES compliance.",
+  "requestFramePermissions": []
+}
