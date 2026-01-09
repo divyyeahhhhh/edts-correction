@@ -22,6 +22,8 @@ import {
 import { DeductorDetails } from './DeductorDetails';
 import { ChallanDetails } from './ChallanDetails';
 import { DeducteeDetails } from './DeducteeDetails';
+import { PanUpdate } from './PanUpdate';
+import { SalaryDetails } from './SalaryDetails';
 
 interface CorrectionStatementProps {
   onBack: () => void;
@@ -78,7 +80,6 @@ export const CorrectionStatement: React.FC<CorrectionStatementProps> = ({ onBack
   };
 
   const downloadSampleFile = () => {
-    // Generate a simple CSV content representing an Excel-ready data sheet
     const content = "TAN,FinancialYear,FormNo,Quarter,CompanyName,PRN\nMUMP33842E,2024-25,26Q,Q1,JAYEMS ENGINEERING CO.PVT.LTD.,770000257261911";
     const blob = new Blob([content], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -99,6 +100,12 @@ export const CorrectionStatement: React.FC<CorrectionStatementProps> = ({ onBack
         return <ChallanDetails />;
       case 'deductee':
         return <DeducteeDetails />;
+      case 'pan_ded':
+        return <PanUpdate title="Deductee" />;
+      case 'pan_sal':
+        return <PanUpdate title="Salary" />;
+      case 'reasons':
+        return <SalaryDetails />;
       case 'create':
         return (
           <div className="animate-in fade-in slide-in-from-left-4 duration-500">
@@ -112,7 +119,6 @@ export const CorrectionStatement: React.FC<CorrectionStatementProps> = ({ onBack
                     <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Source File Selection</h3>
                  </div>
                  
-                 {/* Classy Sample Download Button */}
                  <button 
                   onClick={downloadSampleFile}
                   className="flex items-center gap-2 px-4 py-2 bg-white border border-emerald-100 rounded-xl text-emerald-600 text-[11px] font-black uppercase tracking-wider hover:bg-emerald-50 hover:border-emerald-200 transition-all shadow-sm group"
@@ -234,7 +240,6 @@ export const CorrectionStatement: React.FC<CorrectionStatementProps> = ({ onBack
 
   return (
     <div className="w-full max-w-6xl animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-12">
-      {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 px-2 gap-4">
         <div>
           <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-emerald-600 mb-2 transition-colors font-medium group">
@@ -242,9 +247,9 @@ export const CorrectionStatement: React.FC<CorrectionStatementProps> = ({ onBack
             Return to Dashboard
           </button>
           <h2 className="text-4xl font-serif text-slate-900 tracking-tight">
-            {activeTab === 'deductor' ? 'Deductor ' : activeTab === 'challan' ? 'Challan ' : activeTab === 'deductee' ? 'Deductee ' : 'Create eTDS '}
+            {activeTab === 'deductor' ? 'Deductor ' : activeTab === 'challan' ? 'Challan ' : activeTab === 'deductee' ? 'Deductee ' : activeTab === 'pan_ded' ? 'PAN ' : activeTab === 'reasons' ? 'Salary ' : activeTab === 'pan_sal' ? 'Salary PAN ' : 'Create eTDS '}
             <span className="text-emerald-600">
-              {activeTab === 'deductor' ? 'Details' : activeTab === 'challan' ? 'Management' : activeTab === 'deductee' ? 'Workspace' : 'File'}
+              {activeTab === 'deductor' ? 'Details' : activeTab === 'challan' ? 'Management' : activeTab === 'deductee' ? 'Workspace' : activeTab === 'pan_ded' ? 'Correction' : activeTab === 'reasons' ? 'Workspace' : activeTab === 'pan_sal' ? 'Correction' : 'File'}
             </span>
           </h2>
         </div>
@@ -263,12 +268,10 @@ export const CorrectionStatement: React.FC<CorrectionStatementProps> = ({ onBack
       </div>
 
       <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/60 overflow-hidden min-h-[600px] flex flex-col">
-        {/* Dynamic Content Area */}
         <div className="flex-grow">
           {renderContent()}
         </div>
 
-        {/* Navigation Bar (Tabs) */}
         <div className="px-8 pb-8 pt-4">
           <div className="bg-slate-900 rounded-[2rem] p-2 flex flex-wrap lg:flex-nowrap gap-1 shadow-xl shadow-slate-900/20">
             <ModernTab label="Create eTDS File" active={activeTab === 'create'} onClick={() => setActiveTab('create')} />
@@ -276,12 +279,11 @@ export const CorrectionStatement: React.FC<CorrectionStatementProps> = ({ onBack
             <ModernTab label="Challan" active={activeTab === 'challan'} onClick={() => setActiveTab('challan')} />
             <ModernTab label="Deductee" active={activeTab === 'deductee'} onClick={() => setActiveTab('deductee')} />
             <ModernTab label="PAN Ded." active={activeTab === 'pan_ded'} onClick={() => setActiveTab('pan_ded')} />
-            <ModernTab label="Reasons" active={activeTab === 'reasons'} onClick={() => setActiveTab('reasons')} />
+            <ModernTab label="Salary Details" active={activeTab === 'reasons'} onClick={() => setActiveTab('reasons')} />
             <ModernTab label="PAN Sal." active={activeTab === 'pan_sal'} onClick={() => setActiveTab('pan_sal')} />
           </div>
         </div>
 
-        {/* Footer */}
         <div className="bg-slate-50 px-10 py-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-slate-100">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-6">
              <span>Version 4.2.0 Build 2025</span>
